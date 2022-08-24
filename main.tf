@@ -30,7 +30,6 @@ module "minecraft_server_sg" {
   description = "security group for the minecraft server."
   vpc_id      = module.minecraft_server_vpc.vpc_id
 
-ingress_rules            = [ "ssh-tcp"]
   ingress_with_cidr_blocks = [
     {
       from_port   = var.port
@@ -43,28 +42,10 @@ ingress_rules            = [ "ssh-tcp"]
   egress_rules = ["all-all"]
 }
 
-module "minecraft_server_state_bucket" {
-  source = "terraform-aws-modules/s3-bucket/aws"
-
-  bucket = "methendor-minecraft-state"
-  acl    = "private"
-
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-
-  versioning = {
-    enabled = true
-  }
-
-  tags = local.tags
-}
-
 module "ec2_minecraft" {
   source = "terraform-aws-modules/ec2-instance/aws"
 
-  name   = "Minecraft Server"
+  name = "Minecraft Server"
 
   # instance
   ami                  = var.instance_ami
@@ -74,8 +55,28 @@ module "ec2_minecraft" {
 
   # network
   subnet_id                   = module.minecraft_server_vpc.public_subnets[0]
-  vpc_security_group_ids      = [ module.minecraft_server_sg.security_group_id ]
+  vpc_security_group_ids      = [module.minecraft_server_sg.security_group_id]
   associate_public_ip_address = true
+
+  tags = local.tags
+}
+
+module "minecraft_worlds_bucket" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+
+  bucket        = "methendor-minecraft-worlds"
+  acl    = "private"
+  force_destroy = true
+
+  versioning = {
+    enabled = true
+  }
+
+  # S3 bucket-level Public Access Block configuration
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 
   tags = local.tags
 }

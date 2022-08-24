@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "instance_assume_role_policy" {
   }
 }
 
-# policy to allow ec2 instances to use the Systems Manager agent
+# policy to allow ec2 instances to use the SSM and S3
 resource "aws_iam_policy" "ssm_policy" {
   name = "minecraft-server-ssm-policy"
 
@@ -17,7 +17,7 @@ resource "aws_iam_policy" "ssm_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = ["ssm:*", "ec2messages:*", "ssmmessages:*"]
+        Action   = ["ssm:*", "ec2messages:*", "ssmmessages:*", "s3:*"]
         Effect   = "Allow"
         Resource = "*"
       },
@@ -27,9 +27,9 @@ resource "aws_iam_policy" "ssm_policy" {
 
 # create the iam role for ec2 instances and attach the above policys
 resource "aws_iam_role" "instance_role" {
-    name                    = "minecraft-server-instance-role"
-    assume_role_policy      = data.aws_iam_policy_document.instance_assume_role_policy.json
-    managed_policy_arns     = [aws_iam_policy.ssm_policy.arn]
+  name                = "minecraft-server-instance-role"
+  assume_role_policy  = data.aws_iam_policy_document.instance_assume_role_policy.json
+  managed_policy_arns = [aws_iam_policy.ssm_policy.arn]
 }
 
 # create an instance profile to which can be attached to asg configurations

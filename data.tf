@@ -13,7 +13,7 @@ data "aws_ami" "amazon-linux-2" {
 }
 
 data "template_file" "user_data" {
-  template = file("${path.module}/user_data.sh")
+  template = file("${path.module}/files/user_data.sh")
 
   # vars = {
   #   mc_root        = var.mc_root
