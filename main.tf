@@ -61,20 +61,21 @@ module "minecraft_server_state_bucket" {
   tags = local.tags
 }
 
-# module "ec2_minecraft" {
-#   source = "git::https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git?ref=master"
-#   name   = "${var.name}-public"
+module "ec2_minecraft" {
+  source = "terraform-aws-modules/ec2-instance/aws"
 
-#   # instance
-#   ami                  = var.ami != "" ? var.ami : data.aws_ami.ubuntu.image_id
-#   instance_type        = var.instance_type
-#   iam_instance_profile = aws_iam_instance_profile.id
-#   user_data            = data.template_file.user_data.rendered
+  name   = "Minecraft Server"
 
-#   # network
-#   subnet_id                   = local.subnet_id
-#   vpc_security_group_ids      = [ module.ec2_security_group.this_security_group_id ]
-#   associate_public_ip_address = var.associate_public_ip_address
+  # instance
+  ami                  = var.instance_ami
+  instance_type        = var.instance_type
+  iam_instance_profile = aws_iam_instance_profile.instance_profile.id
+  user_data            = data.template_file.user_data.rendered
 
-#   tags = module.label.tags
-# }
+  # network
+  subnet_id                   = module.minecraft_server_vpc.public_subnets[0]
+  vpc_security_group_ids      = [ module.minecraft_server_sg.security_group_id ]
+  associate_public_ip_address = true
+
+  tags = local.tags
+}

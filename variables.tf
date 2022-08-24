@@ -10,12 +10,12 @@ variable "stack_name" {
 
 variable "instance_ami" {
   description = "the ami used by the minecraft instance"
-  default     = ""
+  default     = "ami-00785f4835c6acf64"
 }
 
-variable "instance_size" {
+variable "instance_type" {
   description = "the size of the minecraft instance"
-  default     = "t2.micro"
+  default     = "t2.small"
 }
 
 variable "port" {
