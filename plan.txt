@@ -1,0 +1,303 @@
+module.minecraft_web_bucket.data.aws_canonical_user_id.this: Reading...
+data.aws_availability_zones.available: Reading...
+aws_iam_policy.ssm_policy: Refreshing state... [id=arn:aws:iam::255199599898:policy/minecraft-server-ssm-policy]
+module.minecraft_server_vpc.aws_vpc.this[0]: Refreshing state... [id=vpc-05078e4b7b8c06adc]
+module.minecraft_worlds_bucket.data.aws_canonical_user_id.this: Reading...
+data.aws_ami.amazon-linux-2: Reading...
+module.minecraft_worlds_bucket.aws_s3_bucket.this[0]: Refreshing state... [id=methendor-minecraft-worlds]
+data.aws_iam_policy_document.instance_assume_role_policy: Reading...
+data.aws_iam_policy_document.instance_assume_role_policy: Read complete after 0s [id=1903849331]
+data.aws_availability_zones.available: Read complete after 0s [id=eu-west-2]
+module.minecraft_worlds_bucket.data.aws_canonical_user_id.this: Read complete after 0s [id=e63287982e65972acc2942680fbf53f778c5fcfed0bc50aacbd7f5f02a21d633]
+module.minecraft_web_bucket.data.aws_canonical_user_id.this: Read complete after 0s [id=e63287982e65972acc2942680fbf53f778c5fcfed0bc50aacbd7f5f02a21d633]
+data.aws_ami.amazon-linux-2: Read complete after 0s [id=ami-0c496e8bea496ed67]
+module.minecraft_server_vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-06bc35e3cb599300b]
+module.minecraft_server_vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-0f53a7541d87a09ec]
+module.minecraft_server_vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0709cf33d0d0e8f41]
+module.minecraft_server_vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-0fa0308674435d61e]
+module.minecraft_server_vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0001773e84d5274d0]
+module.minecraft_server_vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-0814bcd8a6d2bb879]
+module.minecraft_server_vpc.aws_subnet.public[2]: Refreshing state... [id=subnet-0310d905c495a63ae]
+module.minecraft_server_vpc.aws_route_table.private[1]: Refreshing state... [id=rtb-020733ce3c19f0ae1]
+module.minecraft_server_vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-0975724986d44c7c1]
+module.minecraft_server_vpc.aws_route_table.private[2]: Refreshing state... [id=rtb-088a4288456226e5a]
+module.minecraft_server_vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-06be7e01fcdce124f]
+module.minecraft_server_sg.aws_security_group.this_name_prefix[0]: Refreshing state... [id=sg-063a40720a639e5eb]
+module.minecraft_worlds_bucket.aws_s3_bucket_versioning.this[0]: Refreshing state... [id=methendor-minecraft-worlds]
+module.minecraft_worlds_bucket.aws_s3_bucket_acl.this[0]: Refreshing state... [id=methendor-minecraft-worlds,private]
+module.minecraft_server_vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-067e4ab3be3874d02]
+module.minecraft_server_vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-075e1e7d5d0093c2b]
+module.minecraft_server_vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-04810904c8a11709b]
+module.minecraft_worlds_bucket.aws_s3_bucket_public_access_block.this[0]: Refreshing state... [id=methendor-minecraft-worlds]
+data.template_file.user_data: Reading...
+data.template_file.user_data: Read complete after 0s [id=c264455050989faa70b73a6609a71f02e2061e4c830cafa9154b1833c744b07f]
+module.minecraft_server_vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-06be7e01fcdce124f1080289494]
+module.minecraft_server_vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03f80e64083ebb5b2]
+module.minecraft_server_vpc.aws_route_table_association.public[2]: Refreshing state... [id=rtbassoc-0a50cacb9541d2d97]
+module.minecraft_server_vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0e5e00cdf73b2bd23]
+module.minecraft_server_sg.aws_security_group_rule.egress_rules[0]: Refreshing state... [id=sgrule-1991043943]
+module.minecraft_server_sg.aws_security_group_rule.ingress_with_cidr_blocks[0]: Refreshing state... [id=sgrule-3892337952]
+aws_iam_role.instance_role: Refreshing state... [id=minecraft-server-instance-role]
+aws_iam_instance_profile.instance_profile: Refreshing state... [id=instance_profile]
+module.ec2_minecraft.aws_instance.this[0]: Refreshing state... [id=i-067956aa7fd48df95]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # module.ec2_minecraft.aws_instance.this[0] will be updated in-place
+  ~ resource "aws_instance" "this" {
+        id                                   = "i-067956aa7fd48df95"
+        tags                                 = {
+            "Name"       = "Minecraft Server"
+            "Stack Name" = "methendor_minecraft"
+        }
+      ~ user_data                            = "d7f1ccdf0db1dd7b31be1ee4616a177ccd6ee86c" -> "5a44f7c9a2ad43251ad51d51656c41fd299729cf"
+        # (31 unchanged attributes hidden)
+
+        # (8 unchanged blocks hidden)
+    }
+
+  # module.minecraft_web_bucket.aws_s3_bucket.this[0] will be created
+  + resource "aws_s3_bucket" "this" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "methendor-minecraft-website"
+      + bucket_domain_name          = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = false
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags                        = {
+          + "Stack Name" = "methendor_minecraft"
+        }
+      + tags_all                    = {
+          + "Stack Name" = "methendor_minecraft"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule {
+          + allowed_headers = (known after apply)
+          + allowed_methods = (known after apply)
+          + allowed_origins = (known after apply)
+          + expose_headers  = (known after apply)
+          + max_age_seconds = (known after apply)
+        }
+
+      + grant {
+          + id          = (known after apply)
+          + permissions = (known after apply)
+          + type        = (known after apply)
+          + uri         = (known after apply)
+        }
+
+      + lifecycle_rule {
+          + abort_incomplete_multipart_upload_days = (known after apply)
+          + enabled                                = (known after apply)
+          + id                                     = (known after apply)
+          + prefix                                 = (known after apply)
+          + tags                                   = (known after apply)
+
+          + expiration {
+              + date                         = (known after apply)
+              + days                         = (known after apply)
+              + expired_object_delete_marker = (known after apply)
+            }
+
+          + noncurrent_version_expiration {
+              + days = (known after apply)
+            }
+
+          + noncurrent_version_transition {
+              + days          = (known after apply)
+              + storage_class = (known after apply)
+            }
+
+          + transition {
+              + date          = (known after apply)
+              + days          = (known after apply)
+              + storage_class = (known after apply)
+            }
+        }
+
+      + logging {
+          + target_bucket = (known after apply)
+          + target_prefix = (known after apply)
+        }
+
+      + object_lock_configuration {
+          + object_lock_enabled = (known after apply)
+
+          + rule {
+              + default_retention {
+                  + days  = (known after apply)
+                  + mode  = (known after apply)
+                  + years = (known after apply)
+                }
+            }
+        }
+
+      + replication_configuration {
+          + role = (known after apply)
+
+          + rules {
+              + delete_marker_replication_status = (known after apply)
+              + id                               = (known after apply)
+              + prefix                           = (known after apply)
+              + priority                         = (known after apply)
+              + status                           = (known after apply)
+
+              + destination {
+                  + account_id         = (known after apply)
+                  + bucket             = (known after apply)
+                  + replica_kms_key_id = (known after apply)
+                  + storage_class      = (known after apply)
+
+                  + access_control_translation {
+                      + owner = (known after apply)
+                    }
+
+                  + metrics {
+                      + minutes = (known after apply)
+                      + status  = (known after apply)
+                    }
+
+                  + replication_time {
+                      + minutes = (known after apply)
+                      + status  = (known after apply)
+                    }
+                }
+
+              + filter {
+                  + prefix = (known after apply)
+                  + tags   = (known after apply)
+                }
+
+              + source_selection_criteria {
+                  + sse_kms_encrypted_objects {
+                      + enabled = (known after apply)
+                    }
+                }
+            }
+        }
+
+      + server_side_encryption_configuration {
+          + rule {
+              + bucket_key_enabled = (known after apply)
+
+              + apply_server_side_encryption_by_default {
+                  + kms_master_key_id = (known after apply)
+                  + sse_algorithm     = (known after apply)
+                }
+            }
+        }
+
+      + versioning {
+          + enabled    = (known after apply)
+          + mfa_delete = (known after apply)
+        }
+
+      + website {
+          + error_document           = (known after apply)
+          + index_document           = (known after apply)
+          + redirect_all_requests_to = (known after apply)
+          + routing_rules            = (known after apply)
+        }
+    }
+
+  # module.minecraft_web_bucket.aws_s3_bucket_acl.this[0] will be created
+  + resource "aws_s3_bucket_acl" "this" {
+      + acl    = "private"
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + access_control_policy {
+          + grant {
+              + permission = (known after apply)
+
+              + grantee {
+                  + display_name  = (known after apply)
+                  + email_address = (known after apply)
+                  + id            = (known after apply)
+                  + type          = (known after apply)
+                  + uri           = (known after apply)
+                }
+            }
+
+          + owner {
+              + display_name = (known after apply)
+              + id           = (known after apply)
+            }
+        }
+    }
+
+  # module.minecraft_web_bucket.aws_s3_bucket_public_access_block.this[0] will be created
+  + resource "aws_s3_bucket_public_access_block" "this" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+  # module.minecraft_web_bucket.aws_s3_bucket_versioning.this[0] will be created
+  + resource "aws_s3_bucket_versioning" "this" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+
+      + versioning_configuration {
+          + mfa_delete = (known after apply)
+          + status     = "Enabled"
+        }
+    }
+
+  # module.minecraft_web_bucket.aws_s3_bucket_website_configuration.this[0] will be created
+  + resource "aws_s3_bucket_website_configuration" "this" {
+      + bucket           = (known after apply)
+      + id               = (known after apply)
+      + routing_rules    = (known after apply)
+      + website_domain   = (known after apply)
+      + website_endpoint = (known after apply)
+
+      + error_document {
+          + key = "error.html"
+        }
+
+      + index_document {
+          + suffix = "index.html"
+        }
+
+      + routing_rule {
+          + condition {
+              + http_error_code_returned_equals = (known after apply)
+              + key_prefix_equals               = (known after apply)
+            }
+
+          + redirect {
+              + host_name               = (known after apply)
+              + http_redirect_code      = (known after apply)
+              + protocol                = (known after apply)
+              + replace_key_prefix_with = (known after apply)
+              + replace_key_with        = (known after apply)
+            }
+        }
+    }
+
+Plan: 5 to add, 1 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: plan.out
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "plan.out"

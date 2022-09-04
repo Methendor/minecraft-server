@@ -16,10 +16,6 @@ module "minecraft_server_vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  enable_nat_gateway     = true
-  single_nat_gateway     = true
-  one_nat_gateway_per_az = false
-
   tags = local.tags
 }
 
@@ -77,6 +73,31 @@ module "minecraft_worlds_bucket" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+
+  tags = local.tags
+}
+
+module "minecraft_web_bucket" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+
+  bucket        = "methendor-minecraft-website"
+  acl    = "private"
+  force_destroy = true
+
+  versioning = {
+    enabled = true
+  }
+
+  # S3 bucket-level Public Access Block configuration
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+
+  website = {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
 
   tags = local.tags
 }

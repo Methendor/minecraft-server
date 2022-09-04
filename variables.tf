@@ -15,11 +15,23 @@ variable "instance_ami" {
 
 variable "instance_type" {
   description = "the size of the minecraft instance"
-  default     = "t2.small"
+  default     = "t3.medium"
 }
 
 variable "port" {
   description = "port the minecraft server will allow access on"
   type        = number
   default     = 25565
+}
+
+variable "java_mx_mem" {
+  description = "Maximum memory used by Java"
+  type = string
+  default = "1024M"
+}
+
+variable "java_ms_mem" {
+  description = "Minimum memory used by Java"
+  type = string
+  default = "1024M"
 }

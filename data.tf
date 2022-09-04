@@ -15,13 +15,12 @@ data "aws_ami" "amazon-linux-2" {
 data "template_file" "user_data" {
   template = file("${path.module}/files/user_data.sh")
 
-  # vars = {
-  #   mc_root        = var.mc_root
-  #   mc_bucket      = local.bucket
-  #   mc_backup_freq = var.mc_backup_freq
-  #   mc_version     = var.mc_version
-  #   mc_type        = var.mc_type   
-  #   java_mx_mem    = var.java_mx_mem
-  #   java_ms_mem    = var.java_ms_mem
-  # }
+  vars = { 
+    java_mx_mem    = var.java_mx_mem
+    java_ms_mem    = var.java_ms_mem
+    mc_root = "/opt/minecraft_server"
+    mc_worlds = "/opt/minecraft_worlds"
+    mc_bucket = module.minecraft_worlds_bucket.s3_bucket_id
+    mc_backup_freq = 5
+  }
 }
