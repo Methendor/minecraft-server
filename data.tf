@@ -21,6 +21,9 @@ data "template_file" "user_data" {
     mc_root = "/opt/minecraft_server"
     mc_worlds = "/opt/minecraft_worlds"
     mc_bucket = module.minecraft_worlds_bucket.s3_bucket_id
+    mc_web_bucket = module.minecraft_web_bucket.s3_bucket_id
     mc_backup_freq = 5
+    default_world = "survival_01"
+    default_difficulty = "easy"
   }
 }

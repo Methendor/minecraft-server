@@ -49,17 +49,36 @@ cat <<OPS > ${mc_root}/ops.json
       "level": 4,
       "bypassesPlayerLimit": false
     },
-    {
-      "uuid": "a46ae6aa-41db-45b3-9455-9badf7c41fbf",
-      "name": "Tobysaurus13",
-      "level": 4,
-      "bypassesPlayerLimit": false
-    }
+    # {
+    #   "uuid": "a46ae6aa-41db-45b3-9455-9badf7c41fbf",
+    #   "name": "Tobysaurus13",
+    #   "level": 4,
+    #   "bypassesPlayerLimit": false
+    # }
 ]
 OPS
+
+# add index.html
+cat <<WEB > ${mc_root}/index.html
+<!DOCTYPE html><html><head><title>Tobys Minecraft Server IP</title></head><body><h1>Toby's Minecraft Server IP: {server_ip}:25565</h1></body></html>
+WEB
+SERVER_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+sed -i "s/{server_ip}/$SERVER_IP/" ${mc_root}/index.html
+aws s3 cp ${mc_root}/index.html s3://${mc_web_bucket}
 
 # add boot script on instance reboot
 cat <<BOOT > /var/lib/cloud/scripts/per-boot/minecraft-boot.sh
 systemctl start minecraft
-curl http://169.254.169.254/latest/meta-data/public-ipv4
+SERVER_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+sed -i "s/{server_ip}/$SERVER_IP:25565/" ${mc_root}/index.html
+aws s3 cp ${mc_root}/index.html s3://${mc_web_bucket}
 BOOT
+
+# configure server properties
+sed -i "s|level-name=.*$|level-name=${mc_worlds}/${default_world}|" ${mc_root}/server.properties
+sed -i "s|difficulty=.*$|difficulty=${default_difficulty}|" ${mc_root}/server.properties
+sed -i "s|motd=.*$|motd=Tobys Minecraft Server|" ${mc_root}/server.properties
+sed -i "s|max-players=.*$|max-players=10|" ${mc_root}/server.properties
+
+# start minecraft server
+systemctl start minecraft
